@@ -1,5 +1,6 @@
 ﻿using Application.Authentication;
 using Application.Data.Repository;
+using Domain.Enums;
 using PremiersoftChallenge.BuildingBlocks.CQRS;
 using PremiersoftChallenge.BuildingBlocks.Errors;
 using PremiersoftChallenge.BuildingBlocks.Results;
@@ -28,7 +29,7 @@ namespace Application.CheckingAccount.Commands.InactivateAccount
             try
             {
                 var account = _repository.GetById(_loggedContext.Id);
-                if (account == null)
+                if (account == null || account.Status == CheckingAccountStatus.Inactive)
                 {
                     return Result.Failure<bool>(CheckingAccountErrors.InvalidCredentials);
                 }

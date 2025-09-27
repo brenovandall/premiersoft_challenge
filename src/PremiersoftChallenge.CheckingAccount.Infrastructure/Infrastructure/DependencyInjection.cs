@@ -24,6 +24,7 @@ namespace Infrastructure
             services.AddScoped<IQueryExecutor, DapperQueryExecutor>();
             
             services.AddScoped<ICheckingAccountRepository, CheckingAccountRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddInternalAuthentication(configuration);
             services.AddInternalAuthorization();

@@ -1,5 +1,6 @@
 ﻿using Domain.ValueObjects;
 using PremiersoftChallenge.SharedKernel;
+using PremiersoftChallenge.SharedKernel.Exceptions;
 
 namespace Domain
 {
@@ -16,7 +17,24 @@ namespace Domain
     {
         public Guid CheckingAccountId { get; set; }
         public DateTime TransactionDate { get; set; }
-        public TransactionFlow TransactionFlow { get; set; }
+        public TransactionFlow TransactionFlow { get; set; } = default!;
         public double Value { get; set; }
+
+        public static ITransaction Create(Guid checkingAccountId, string transactionFlow, double value)
+        {
+            if (value <= 0)
+            {
+                throw new InvalidValueException(nameof(value));
+            }
+
+            return new Transaction
+            {
+                Id = Guid.NewGuid(),
+                CheckingAccountId = checkingAccountId,
+                TransactionDate = DateTime.Now,
+                TransactionFlow = TransactionFlow.From(transactionFlow),
+                Value = value
+            };
+        }
     }
 }

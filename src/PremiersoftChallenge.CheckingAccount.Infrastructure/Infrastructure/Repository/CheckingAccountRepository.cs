@@ -44,12 +44,8 @@ SELECT
 	ativo Status,
 	senha Password,
 	salt Salt
-FROM contacorrente WHERE idcontacorrente = @id AND ativo = @active";
-            var param = new
-            {
-                id = id,
-                active = (int)CheckingAccountStatus.Active
-            };
+FROM contacorrente WHERE idcontacorrente = @id";
+            var param = new { id };
 
             return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<CheckingAccount>(param);
         }
