@@ -1,4 +1,5 @@
 ﻿using Application.Authentication;
+using Application.Data.Repository;
 using PremiersoftChallenge.BuildingBlocks.CQRS;
 using PremiersoftChallenge.BuildingBlocks.Errors;
 using PremiersoftChallenge.BuildingBlocks.Results;
@@ -9,10 +10,12 @@ namespace Application.CheckingAccount.Commands.CreateCheckingAccount
     public class CreateCheckingAccountHandler : ICommandHandler<CreateCheckingAccountCommand, CreateCheckingAccountResult>
     {
         private readonly IPasswordHasher _passwordHasher;
+        private readonly ICheckingAccountRepository _repository;
 
-        public CreateCheckingAccountHandler(IPasswordHasher passwordHasher)
+        public CreateCheckingAccountHandler(IPasswordHasher passwordHasher, ICheckingAccountRepository repository)
         {
             _passwordHasher = passwordHasher;
+            _repository = repository;
         }
 
         public async Task<Result<CreateCheckingAccountResult>> Handle(CreateCheckingAccountCommand command, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ namespace Application.CheckingAccount.Commands.CreateCheckingAccount
             var salt = parts[1];
             var checkingAccount = Domain.CheckingAccount.Create(command.Cpf, password, salt);
 
-            // todo - salva no banco
+            _repository.Add(checkingAccount);
 
             return new CreateCheckingAccountResult(checkingAccount.Number);
         }

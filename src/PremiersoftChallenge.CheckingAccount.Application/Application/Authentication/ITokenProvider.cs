@@ -1,7 +1,9 @@
-﻿namespace Application.Authentication
+﻿using Domain;
+
+namespace Application.Authentication
 {
     public interface ITokenProvider
     {
-        string Create(Domain.CheckingAccount checkingAccount);
+        string Create(ICheckingAccount checkingAccount);
     }
 }

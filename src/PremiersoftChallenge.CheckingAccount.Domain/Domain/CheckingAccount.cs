@@ -5,6 +5,7 @@ namespace Domain
 {
     public interface ICheckingAccount
     {
+        Guid Id { get; }
         long Number { get; }
         string Name { get; }
         CheckingAccountStatus Status { get; }

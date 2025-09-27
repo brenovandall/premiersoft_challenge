@@ -17,7 +17,7 @@ namespace Infrastructure.Authentication
             _configuration = configuration;
         }
 
-        public string Create(CheckingAccount checkingAccount)
+        public string Create(ICheckingAccount checkingAccount)
         {
             string secretKey = _configuration["Jwt:Secret"]!;
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

@@ -5,6 +5,7 @@ namespace Domain
 {
     public interface ITransaction
     {
+        Guid Id { get; }
         Guid CheckingAccountId { get; }
         DateTime TransactionDate { get; }
         TransactionFlow TransactionFlow { get; }
