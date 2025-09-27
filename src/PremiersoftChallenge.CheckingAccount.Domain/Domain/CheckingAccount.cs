@@ -1,5 +1,6 @@
 ﻿using Domain.Enums;
 using PremiersoftChallenge.SharedKernel;
+using PremiersoftChallenge.SharedKernel.Exceptions;
 
 namespace Domain
 {
@@ -11,6 +12,8 @@ namespace Domain
         CheckingAccountStatus Status { get; }
         string Password { get; }
         string Salt { get; }
+
+        ICheckingAccount Inactivate();
     }
 
     public class CheckingAccount : Entity<Guid>, ICheckingAccount
@@ -32,6 +35,16 @@ namespace Domain
                 Password = password,
                 Salt = salt
             };
+        }
+
+        public ICheckingAccount Inactivate()
+        {
+            if (Status == CheckingAccountStatus.Inactive)
+                throw new DomainException("A conta deve estar ativa para ser inativada.");
+
+            Status = CheckingAccountStatus.Inactive;
+
+            return this;
         }
     }
 }

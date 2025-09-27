@@ -1,5 +1,6 @@
 ﻿using Application.Data.Repository;
 using Domain;
+using Domain.Enums;
 using Infrastructure.Abstractions.Commands;
 using Infrastructure.Abstractions.Queries;
 using Infrastructure.Extensions;
@@ -33,6 +34,26 @@ namespace Infrastructure.Repository
             GetSqlCommandFactory().SetCommand(sql).Execute(param);
         }
 
+        public ICheckingAccount? GetById(Guid id)
+        {
+            var sql = @"
+SELECT
+	idcontacorrente Id,
+	numero Number,
+	nome Name,
+	ativo Status,
+	senha Password,
+	salt Salt
+FROM contacorrente WHERE idcontacorrente = @id AND ativo = @active";
+            var param = new
+            {
+                id = id,
+                active = (int)CheckingAccountStatus.Active
+            };
+
+            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<CheckingAccount>(param);
+        }
+
         public ICheckingAccount? GetByAccountNumberOrName(string searchString)
         {
             var sql = @"
@@ -43,14 +64,32 @@ SELECT
 	ativo Status,
 	senha Password,
 	salt Salt
-FROM contacorrente WHERE nome = @name OR numero = @number";
+FROM contacorrente WHERE (nome = @name OR numero = @number) AND ativo = @active";
             var param = new
             {
                 name = searchString,
-                number = searchString
+                number = searchString,
+                active = (int)CheckingAccountStatus.Active
             };
 
             return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<CheckingAccount>(param);
+        }
+
+        public void Update(ICheckingAccount checkingAccount)
+        {
+            var sql = @"UPDATE contacorrente SET numero = @number, nome = @name, ativo = @active, senha = @password,
+salt = @salt WHERE idcontacorrente = @id";
+            var param = new
+            {
+                id = checkingAccount.Id,
+                number = checkingAccount.Number,
+                name = checkingAccount.Name,
+                active = (int)checkingAccount.Status,
+                password = checkingAccount.Password,
+                salt = checkingAccount.Salt
+            };
+
+            GetSqlCommandFactory().SetCommand(sql).Execute(param);
         }
 
         private IQueryExecutor GetSqlQueryFactory()
