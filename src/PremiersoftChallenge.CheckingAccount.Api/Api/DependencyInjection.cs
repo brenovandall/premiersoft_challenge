@@ -1,4 +1,5 @@
-﻿using Carter;
+﻿using Api.Extensions;
+using Carter;
 
 namespace Api
 {
@@ -8,7 +9,7 @@ namespace Api
         {
             services.AddCarter();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddAuthenticatedSwaggerGen();
 
             return services;
         }
@@ -20,7 +21,9 @@ namespace Api
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            //app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             return app;
         }
