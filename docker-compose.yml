@@ -1,0 +1,15 @@
+services:
+  cachingcontainer: 
+    image: redis
+
+  chekingaccount.api:
+    image: ${DOCKER_REGISTRY-}chekingaccountapi
+    build:
+      context: .
+      dockerfile: src/PremiersoftChallenge.CheckingAccount.Api/Api/Dockerfile
+
+  transfer.api:
+    image: ${DOCKER_REGISTRY-}transferapi
+    build:
+      context: .
+      dockerfile: src/PremiersoftChallenge.Transfer.Api/Api/Dockerfile

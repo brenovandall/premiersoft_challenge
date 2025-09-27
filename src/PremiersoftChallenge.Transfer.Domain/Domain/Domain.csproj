@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\PremiersoftChallenge.SharedKernel\PremiersoftChallenge.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>
