@@ -39,6 +39,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.SharedKernel", "src\PremiersoftChallenge.SharedKernel\PremiersoftChallenge.SharedKernel.csproj", "{8284B587-4E09-43B4-B2CE-98B073854724}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.Security", "src\PremiersoftChallenge.Security\PremiersoftChallenge.Security.csproj", "{F146DC52-FDEF-46C8-8490-C463D410E1BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{8284B587-4E09-43B4-B2CE-98B073854724}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8284B587-4E09-43B4-B2CE-98B073854724}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8284B587-4E09-43B4-B2CE-98B073854724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2} = {113D9E02-3F44-4742-ABAD-F47C4509CD55}
 		{C0D9A031-0E6B-4897-B742-E77D977AF7DE} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
 		{8284B587-4E09-43B4-B2CE-98B073854724} = {2BED4629-96F2-4442-9941-8048450CD2B7}
+		{F146DC52-FDEF-46C8-8490-C463D410E1BF} = {2BED4629-96F2-4442-9941-8048450CD2B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF00D3E9-1CE8-4108-8080-95EC6364EDE3}

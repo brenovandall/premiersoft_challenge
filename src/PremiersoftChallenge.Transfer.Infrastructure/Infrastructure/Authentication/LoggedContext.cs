@@ -22,5 +22,27 @@ namespace Infrastructure.Authentication
                     .GetAccountId() ?? throw new Exception("Failed to fetch account id!");
             }
         }
+
+        public string? Token
+        {
+            get
+            {
+                var authorizationHeader = _httpContextAccessor
+                    .HttpContext?
+                    .Request
+                    .Headers
+                    .Authorization
+                    .FirstOrDefault();
+
+                if (string.IsNullOrEmpty(authorizationHeader))
+                {
+                    return null;
+                }
+
+                return authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)
+                    ? authorizationHeader["Bearer ".Length..].Trim()
+                    : authorizationHeader;
+            }
+        }
     }
 }

@@ -8,11 +8,9 @@ using Infrastructure.Authentication;
 using Infrastructure.Extensions;
 using Infrastructure.Repository;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using PremiersoftChallenge.Security;
 
 namespace Infrastructure
 {
@@ -40,19 +38,7 @@ namespace Infrastructure
 
         private static IServiceCollection AddInternalAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(o =>
-                {
-                    o.RequireHttpsMetadata = false;
-                    o.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!)),
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        ValidAudience = configuration["Jwt:Audience"],
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
-
+            services.AddSecurityBaseAuthentication(configuration["Jwt:Secret"]!, configuration["Jwt:Issuer"], configuration["Jwt:Audience"]);
             services.AddHttpContextAccessor();
             services.AddScoped<ILoggedContext, LoggedContext>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -63,7 +49,7 @@ namespace Infrastructure
 
         private static IServiceCollection AddInternalAuthorization(this IServiceCollection services)
         {
-            services.AddAuthorization();
+            services.AddSecurityBaseAuthorization();
 
             return services;
         }

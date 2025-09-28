@@ -5,6 +5,7 @@ namespace Domain
 {
     public interface ITransfer
     {
+        Guid Id { get; }
         Guid SourceCheckingAccountId { get; }
         Guid TargetCheckingAccountId { get; }
         DateTime TransactionDate { get; }
@@ -20,12 +21,12 @@ namespace Domain
 
         public static ITransfer Create(string sourceCheckingAccountId, string targetCheckingAccountId, double value)
         {
-            if (Guid.TryParse(sourceCheckingAccountId, out var sourceGuidOutput))
+            if (!Guid.TryParse(sourceCheckingAccountId, out var sourceGuidOutput))
             {
                 throw new DomainException($"GUID {sourceGuidOutput} inválido.");
             }
 
-            if (Guid.TryParse(targetCheckingAccountId, out var targetGuidOutput))
+            if (!Guid.TryParse(targetCheckingAccountId, out var targetGuidOutput))
             {
                 throw new DomainException($"GUID {targetGuidOutput} inválido.");
             }
@@ -37,6 +38,7 @@ namespace Domain
 
             return new Transfer
             {
+                Id = Guid.NewGuid(),
                 SourceCheckingAccountId = sourceGuidOutput,
                 TargetCheckingAccountId = targetGuidOutput,
                 TransactionDate = DateTime.Now,

@@ -1,11 +1,39 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
-namespace Api.Extensions
+namespace PremiersoftChallenge.Security
 {
-    internal static class AuthExtensions
+    public static class AuthenticationExtensions
     {
-        internal static IServiceCollection AddAuthenticatedSwaggerGen(this IServiceCollection services)
+        public static IServiceCollection AddSecurityBaseAuthentication(this IServiceCollection services, string secret, string? issuer, string? audience)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.RequireHttpsMetadata = false;
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+                        ValidIssuer = issuer,
+                        ValidAudience = audience,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            return services;
+        }
+
+        public static IServiceCollection AddSecurityBaseAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAuthenticatedSwaggerGen(this IServiceCollection services)
         {
             services.AddSwaggerGen(o =>
             {
