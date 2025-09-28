@@ -20,7 +20,7 @@ namespace Domain
         public TransactionFlow TransactionFlow { get; set; } = default!;
         public double Value { get; set; }
 
-        public static ITransaction Create(Guid checkingAccountId, string transactionFlow, double value)
+        public static ITransaction Create(Guid id, Guid checkingAccountId, string transactionFlow, double value)
         {
             if (value <= 0)
             {
@@ -29,7 +29,7 @@ namespace Domain
 
             return new Transaction
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 CheckingAccountId = checkingAccountId,
                 TransactionDate = DateTime.Now,
                 TransactionFlow = TransactionFlow.From(transactionFlow),

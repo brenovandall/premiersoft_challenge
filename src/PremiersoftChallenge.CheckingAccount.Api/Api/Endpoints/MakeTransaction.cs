@@ -7,7 +7,7 @@ namespace Api.Endpoints
 {
     public sealed class MakeTransaction : ICarterModule
     {
-        public sealed record MakeTransactionRequest(long? AccountNumber, double Value, string TransactionFlow);
+        public sealed record MakeTransactionRequest(string RequestId, long? AccountNumber, double Value, string TransactionFlow);
 
         public void AddRoutes(IEndpointRouteBuilder app)
         {
@@ -16,7 +16,8 @@ namespace Api.Endpoints
                 ICommandHandler<MakeTransactionCommand, bool> handler,
                 CancellationToken cancellationToken) =>
             {
-                var command = new MakeTransactionCommand(AccountNumber: request.AccountNumber,
+                var command = new MakeTransactionCommand(
+                    RequestId: request.RequestId, AccountNumber: request.AccountNumber,
                     Value: request.Value, TransactionFlow: request.TransactionFlow);
 
                 var result = await handler.Handle(command, cancellationToken);

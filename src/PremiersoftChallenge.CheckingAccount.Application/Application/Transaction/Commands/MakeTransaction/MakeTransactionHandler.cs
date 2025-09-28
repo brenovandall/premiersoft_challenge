@@ -49,7 +49,13 @@ namespace Application.Transaction.Commands.MakeTransaction
                     }
                 }
 
-                var transaction = Domain.Transaction.Create(account.Id, command.TransactionFlow, command.Value);
+                var valid = Guid.TryParse(command.RequestId, out var parsedRequestId);
+                if (!valid)
+                {
+                    return Result.Failure<bool>(Error.Failure("INVALID_OPERATION", $"Não foi possível converter o valor {parsedRequestId} para o formato esperado."));
+                }
+
+                var transaction = Domain.Transaction.Create(parsedRequestId, account.Id, command.TransactionFlow, command.Value);
                 _transactionRepository.Add(transaction);
 
                 return Result.Success(true);

@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.Dto;
+using Application.Services;
 using Infrastructure.Http;
 using Microsoft.Extensions.Configuration;
 using PremiersoftChallenge.BuildingBlocks.Results;
@@ -36,12 +37,12 @@ namespace Infrastructure.Services
             return Result.Success(parsedId);
         }
 
-        private sealed record TransactionRequest(long? AccountNumber, double Value, string TransactionFlow);
+        private sealed record TransactionRequest(string RequestId, long? AccountNumber, double Value, string TransactionFlow);
 
-        public async Task<Result> SendTransactionRequest(long? accountNumber, double value, string transactionFlow)
+        public async Task<Result> SendTransactionRequest(string requestId, long? accountNumber, double value, string transactionFlow)
         {
             var baseUri = _configuration["ChekingAccountApi:BaseUri"];
-            var request = new TransactionRequest(accountNumber, value, transactionFlow);
+            var request = new TransactionRequest(requestId, accountNumber, value, transactionFlow);
             var result = await _apiCall.PostAsync($"{baseUri}/v1/transaction/perform", request);
             if (result.IsFailure)
             {
@@ -49,6 +50,20 @@ namespace Infrastructure.Services
             }
 
             return Result.Success(result);
+        }
+
+        public sealed record GetTransactionByIdResult(TransactionDto Transaction);
+
+        public async Task<Result<TransactionDto>> GetTransactionById(string transactionId)
+        {
+            var baseUri = _configuration["ChekingAccountApi:BaseUri"];
+            var result = await _apiCall.GetAsync<GetTransactionByIdResult>($"{baseUri}/v1/transaction/{transactionId}");
+            if (result.IsFailure)
+            {
+                return Result.Failure<TransactionDto>(result.Error);
+            }
+
+            return Result.Success(result.Value.Transaction);
         }
     }
 }

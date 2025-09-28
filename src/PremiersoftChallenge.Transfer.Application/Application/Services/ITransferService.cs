@@ -1,10 +1,12 @@
-﻿using PremiersoftChallenge.BuildingBlocks.Results;
+﻿using Application.Dto;
+using PremiersoftChallenge.BuildingBlocks.Results;
 
 namespace Application.Services
 {
     public interface ITransferService
     {
         Task<Result<Guid>> GetCheckingAccountIdByNumber(long accountNumber);
-        Task<Result> SendTransactionRequest(long? accountNumber, double value, string transactionFlow);
+        Task<Result> SendTransactionRequest(string requestId, long? accountNumber, double value, string transactionFlow);
+        Task<Result<TransactionDto>> GetTransactionById(string transactionId);
     }
 }

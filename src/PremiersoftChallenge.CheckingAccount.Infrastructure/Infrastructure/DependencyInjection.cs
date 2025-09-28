@@ -27,6 +27,7 @@ namespace Infrastructure
             services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddScoped<ICheckingAccountService, CheckingAccountService>();
+            services.AddScoped<ITransactionService, TransactionService>();
 
             services.AddInternalAuthentication(configuration);
             services.AddInternalAuthorization();

@@ -2,6 +2,6 @@
 
 namespace Application.Transaction.Commands.MakeTransaction
 {
-    public sealed record MakeTransactionCommand(long? AccountNumber, double Value, string TransactionFlow)
+    public sealed record MakeTransactionCommand(string RequestId, long? AccountNumber, double Value, string TransactionFlow)
         : ICommand<bool>;
 }
