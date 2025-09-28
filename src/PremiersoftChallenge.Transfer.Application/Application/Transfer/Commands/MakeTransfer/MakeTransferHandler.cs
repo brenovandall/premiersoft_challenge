@@ -23,6 +23,9 @@ namespace Application.Transfer.Commands.MakeTransfer
             _loggedContext = loggedContext;
         }
 
+        private const string Debit = "D";
+        private const string Credit = "C";
+
         public async Task<Result<bool>> Handle(MakeTransferCommand command, CancellationToken cancellationToken)
         {
             var sourceTransactionId = Guid.NewGuid().ToString();
@@ -31,46 +34,44 @@ namespace Application.Transfer.Commands.MakeTransfer
             try
             {
                 var targetId = await _transferService.GetCheckingAccountIdByNumber(command.TargetAccountNumber);
-                if (targetId.IsFailure)
-                {
-                    return Result.Failure<bool>(targetId.Error);
-                }
+                if (targetId.IsFailure) return Result.Failure<bool>(targetId.Error);
 
-                var sourceResult = await _transferService.SendTransactionRequest(sourceTransactionId, null, command.Value, "D");
+                var sourceResult = await _transferService.SendTransactionRequest(sourceTransactionId, null, command.Value, Debit);
                 if (sourceResult.IsFailure)
-                {
-                    return Result.Failure<bool>(sourceResult.Error);
-                }
+                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
 
-                var targetResult = await _transferService.SendTransactionRequest(targetTransactionId, command.TargetAccountNumber, command.Value, "C");
+                var targetResult = await _transferService.SendTransactionRequest(targetTransactionId, command.TargetAccountNumber, command.Value, Credit);
                 if (targetResult.IsFailure)
-                {
-                    return Result.Failure<bool>(targetResult.Error);
-                }
+                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
 
                 var transfer = Domain.Transfer.Create(_loggedContext.Id.ToString(), targetId.Value.ToString(), command.Value);
                 _transferRepository.Add(transfer);
 
                 return Result.Success(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var sourceFallback = await HandleFallbackAsync(sourceTransactionId, null, command.Value, "C");
-                if (sourceFallback.IsSuccess)
-                {
-                    var targetFallback = await HandleFallbackAsync(targetTransactionId, command.TargetAccountNumber, command.Value, "D");
-                    if (targetFallback.IsFailure)
-                    {
-                        return Result.Failure<bool>(targetFallback.Error);
-                    }
-                }
-                else
-                {
-                    return Result.Failure<bool>(sourceFallback.Error);
-                }
-
-                return Result.Failure<bool>(Error.Failure("SERVER_ERROR", ex.Message));
+                return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
             }
+        }
+
+        private async Task<Result<bool>> Fallback(string sourceTransactionId, string targetTransactionId, long targetAccountNumber, double value)
+        {
+            var sourceFallback = await HandleFallbackAsync(sourceTransactionId, null, value, Credit);
+
+            if (sourceFallback.IsSuccess)
+            {
+                var targetFallback = await HandleFallbackAsync(targetTransactionId, targetAccountNumber, value, Debit);
+                if (targetFallback.IsFailure)
+                    return Result.Failure<bool>(targetFallback.Error);
+            }
+            else
+            {
+                return Result.Failure<bool>(sourceFallback.Error);
+            }
+
+            return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao atender a requisição." +
+                                                                      "Os envolvidos foram reembolsados."));
         }
 
         private async Task<Result> HandleFallbackAsync(string transactionId, long? accountNumber, double value, string flow)
@@ -78,7 +79,7 @@ namespace Application.Transfer.Commands.MakeTransfer
             var target = await _transferService.GetTransactionById(transactionId);
             if (!target.IsFailure)
             {
-                var refund = await EnsureRefunded(transactionId, null, value, "C");
+                var refund = await EnsureRefunded(transactionId, null, value, flow);
                 if (refund.IsFailure)
                     return Result.Failure<bool>(TransactionErrors.RefundFailed);
             }
@@ -87,11 +88,9 @@ namespace Application.Transfer.Commands.MakeTransfer
 
         private async Task<Result> EnsureRefunded(string transactionId, long? accountNumber, double value, string flow)
         {
-            var targetResult = await _transferService.SendTransactionRequest(transactionId, accountNumber, value, flow);
+            var targetResult = await _transferService.SendTransactionRequest(Guid.NewGuid().ToString(), accountNumber, value, flow);
             if (targetResult.IsFailure)
-            {
                 return Result.Failure<bool>(targetResult.Error);
-            }
 
             return Result.Success();
         }

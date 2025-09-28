@@ -24,7 +24,7 @@ namespace Api.Endpoints
             .WithName("BalanceInfo")
             .RequireAuthorization()
             .Produces<GetBalanceResponse>(StatusCodes.Status200OK)
-            .WithSummary("Consultar informações de saldo da conta corrente.")
+            .WithSummary("Obter informações de saldo da conta corrente.")
             .WithDescription("Retorna as informações de saldo da conta corrente do cliente autenticado. " +
                              "Utiliza o identificador do cliente logado para buscar os dados. " +
                              "Responde com **200 OK** em caso de sucesso ou mensagem de erro em caso de falha.");
