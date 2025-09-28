@@ -27,7 +27,8 @@ namespace Application.CheckingAccount.Commands.CreateCheckingAccount
             var parts = passwordHash.Split('-');
             var password = parts[0];
             var salt = parts[1];
-            var checkingAccount = Domain.CheckingAccount.Create(command.Cpf, password, salt);
+            var number = _repository.Count() + 1;
+            var checkingAccount = Domain.CheckingAccount.Create(number, command.Cpf, password, salt);
 
             _repository.Add(checkingAccount);
 

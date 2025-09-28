@@ -33,7 +33,7 @@ namespace Domain
                 CheckingAccountId = checkingAccountId,
                 TransactionDate = DateTime.Now,
                 TransactionFlow = TransactionFlow.From(transactionFlow),
-                Value = value
+                Value = Math.Round(value, 2)
             };
         }
     }

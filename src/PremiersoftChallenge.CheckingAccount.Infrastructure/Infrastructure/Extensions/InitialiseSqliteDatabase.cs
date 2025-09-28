@@ -4,7 +4,7 @@ namespace Infrastructure.Extensions
 {
     public static class InitialiseSqliteDatabase
     {
-        public static async Task CreateTables()
+        public static async Task CreateTablesAsync()
         {
             using var connection = new SqliteConnection(ConnectionStringBuilder.GetConnectionString());
             await connection.OpenAsync();

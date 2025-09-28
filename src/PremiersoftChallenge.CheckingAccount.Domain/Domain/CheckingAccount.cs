@@ -24,12 +24,12 @@ namespace Domain
         public string Password { get; private set; } = default!;
         public string Salt { get; private set; } = default!;
 
-        public static ICheckingAccount Create(string name, string password, string salt)
+        public static ICheckingAccount Create(long number, string name, string password, string salt)
         {
             return new CheckingAccount
             {
                 Id = Guid.NewGuid(),
-                Number = 0,
+                Number = number,
                 Name = name,
                 Status = CheckingAccountStatus.Active,
                 Password = password,

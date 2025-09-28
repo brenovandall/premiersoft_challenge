@@ -13,6 +13,6 @@ var app = builder.Build();
 
 app.UsePresentationServices();
 
-await InitialiseSqliteDatabase.CreateTables();
+await InitialiseSqliteDatabase.CreateTablesAsync();
 
 app.Run();

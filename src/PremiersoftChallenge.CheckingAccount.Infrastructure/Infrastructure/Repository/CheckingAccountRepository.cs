@@ -34,6 +34,13 @@ namespace Infrastructure.Repository
             GetSqlCommandFactory().SetCommand(sql).Execute(param);
         }
 
+        public long Count()
+        {
+            var sql = "SELECT COUNT(idcontacorrente) Result FROM contacorrente";
+
+            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<long>();
+        }
+
         public ICheckingAccount? GetById(Guid id)
         {
             var sql = @"

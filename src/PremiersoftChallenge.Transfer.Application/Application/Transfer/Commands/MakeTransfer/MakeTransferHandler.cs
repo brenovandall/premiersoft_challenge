@@ -30,28 +30,29 @@ namespace Application.Transfer.Commands.MakeTransfer
         {
             var sourceTransactionId = Guid.NewGuid().ToString();
             var targetTransactionId = Guid.NewGuid().ToString();
+            var normalizedValue = Math.Round(command.Value, 2);
 
             try
             {
                 var targetId = await _transferService.GetCheckingAccountIdByNumber(command.TargetAccountNumber);
                 if (targetId.IsFailure) return Result.Failure<bool>(targetId.Error);
 
-                var sourceResult = await _transferService.SendTransactionRequest(sourceTransactionId, null, command.Value, Debit);
+                var sourceResult = await _transferService.SendTransactionRequest(sourceTransactionId, null, normalizedValue, Debit);
                 if (sourceResult.IsFailure)
-                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
+                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, normalizedValue);
 
-                var targetResult = await _transferService.SendTransactionRequest(targetTransactionId, command.TargetAccountNumber, command.Value, Credit);
+                var targetResult = await _transferService.SendTransactionRequest(targetTransactionId, command.TargetAccountNumber, normalizedValue, Credit);
                 if (targetResult.IsFailure)
-                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
+                    return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, normalizedValue);
 
-                var transfer = Domain.Transfer.Create(_loggedContext.Id.ToString(), targetId.Value.ToString(), command.Value);
+                var transfer = Domain.Transfer.Create(_loggedContext.Id.ToString(), targetId.Value.ToString(), normalizedValue);
                 _transferRepository.Add(transfer);
 
                 return Result.Success(true);
             }
             catch (Exception)
             {
-                return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, command.Value);
+                return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, normalizedValue);
             }
         }
 
@@ -62,8 +63,7 @@ namespace Application.Transfer.Commands.MakeTransfer
             if (sourceFallback.IsSuccess)
             {
                 var targetFallback = await HandleFallbackAsync(targetTransactionId, targetAccountNumber, value, Debit);
-                if (targetFallback.IsFailure)
-                    return Result.Failure<bool>(targetFallback.Error);
+                if (targetFallback.IsFailure) return Result.Failure<bool>(targetFallback.Error);
             }
             else
             {
@@ -80,8 +80,7 @@ namespace Application.Transfer.Commands.MakeTransfer
             if (!target.IsFailure)
             {
                 var refund = await EnsureRefunded(transactionId, null, value, flow);
-                if (refund.IsFailure)
-                    return Result.Failure<bool>(TransactionErrors.RefundFailed);
+                if (refund.IsFailure) return Result.Failure<bool>(TransactionErrors.RefundFailed);
             }
             return Result.Success();
         }
@@ -89,8 +88,7 @@ namespace Application.Transfer.Commands.MakeTransfer
         private async Task<Result> EnsureRefunded(string transactionId, long? accountNumber, double value, string flow)
         {
             var targetResult = await _transferService.SendTransactionRequest(Guid.NewGuid().ToString(), accountNumber, value, flow);
-            if (targetResult.IsFailure)
-                return Result.Failure<bool>(targetResult.Error);
+            if (targetResult.IsFailure) return Result.Failure<bool>(targetResult.Error);
 
             return Result.Success();
         }
