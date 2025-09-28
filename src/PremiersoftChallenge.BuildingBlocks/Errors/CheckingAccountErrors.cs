@@ -9,5 +9,7 @@ namespace PremiersoftChallenge.BuildingBlocks.Errors
         public static readonly Error InvalidAccount = Error.Problem("INVALID_ACCOUNT", "Conta corrente não encontrada.");
         public static readonly Error InactiveAccount = Error.Problem(
             "INACTIVE_ACCOUNT", "A conta corrente não pode realizar movimentações, pois a mesma encontra-se inativa.");
+        public static readonly Error InvalidBalanceInfoResult = Error.Problem(
+            "INVALID_RESULT", "Os dados do saldo não foram encontrados.");
     }
 }

@@ -25,7 +25,7 @@ namespace Api.Endpoints
             .WithName("Inactivate")
             .RequireAuthorization()
             .Produces<bool>(StatusCodes.Status204NoContent)
-            .WithSummary("Inativar conta corrente.")
+            .WithSummary("Inativar uma conta corrente.")
             .WithDescription("Endpoint responsável por inativar a conta corrente logada. " +
                              "Recebe a senha como parâmetro para validar a operação. ");
         }

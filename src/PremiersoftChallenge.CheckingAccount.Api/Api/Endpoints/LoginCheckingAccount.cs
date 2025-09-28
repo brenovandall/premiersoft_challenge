@@ -25,7 +25,7 @@ namespace Api.Endpoints
             })
             .WithName("Login")
             .Produces<string>(StatusCodes.Status200OK)
-            .WithSummary("Realiza o login de uma conta corrente.")
+            .WithSummary("Realizar o login em uma conta corrente.")
             .WithDescription("Endpoint responsável por autenticar um cliente da conta corrente. " +
                              "Recebe credenciais de acesso (CPF/número da conta e senha), valida com a camada de aplicação " +
                              "e retorna um token válido por 15 minutos em caso de autenticação bem-sucedida. " +

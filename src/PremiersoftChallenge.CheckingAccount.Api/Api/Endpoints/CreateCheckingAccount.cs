@@ -24,7 +24,7 @@ namespace Api.Endpoints
             })
             .WithName("CreateAccount")
             .Produces<CreateCheckingAccountResult>(StatusCodes.Status200OK)
-            .WithSummary("Cria uma nova conta corrente.")
+            .WithSummary("Criar uma nova conta corrente.")
             .WithDescription("Recebe os dados de CPF e senha, cria uma nova conta corrente e retorna o número da conta criada. " +
                              "Caso haja falha de validação ou regra de negócio, retorna detalhes do problema.");
         }

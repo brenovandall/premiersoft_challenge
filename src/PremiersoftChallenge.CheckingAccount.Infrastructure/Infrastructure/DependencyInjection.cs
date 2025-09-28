@@ -1,11 +1,13 @@
 ﻿using Application.Authentication;
 using Application.Data.Repository;
+using Application.Services;
 using Dapper;
 using Infrastructure.Abstractions.Commands;
 using Infrastructure.Abstractions.Queries;
 using Infrastructure.Authentication;
 using Infrastructure.Extensions;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,8 @@ namespace Infrastructure
             
             services.AddScoped<ICheckingAccountRepository, CheckingAccountRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+            services.AddScoped<ICheckingAccountService, CheckingAccountService>();
 
             services.AddInternalAuthentication(configuration);
             services.AddInternalAuthorization();
