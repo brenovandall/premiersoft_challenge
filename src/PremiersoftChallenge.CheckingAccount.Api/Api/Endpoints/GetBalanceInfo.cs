@@ -1,4 +1,5 @@
 ﻿using Api.Extensions;
+using Api.Infrastructure;
 using Application.Authentication;
 using Application.CheckingAccount.Queries.GetBalance;
 using Carter;
@@ -24,6 +25,7 @@ namespace Api.Endpoints
             .WithName("BalanceInfo")
             .RequireAuthorization()
             .Produces<GetBalanceResponse>(StatusCodes.Status200OK)
+            .AddEndpointFilter<IdempotencyFilter>()
             .WithSummary("Obter informações de saldo da conta corrente.")
             .WithDescription("Retorna as informações de saldo da conta corrente do cliente autenticado. " +
                              "Utiliza o identificador do cliente logado para buscar os dados. " +

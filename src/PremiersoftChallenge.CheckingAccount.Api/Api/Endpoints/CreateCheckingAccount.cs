@@ -1,4 +1,5 @@
 ﻿using Api.Extensions;
+using Api.Infrastructure;
 using Application.CheckingAccount.Commands.CreateCheckingAccount;
 using Carter;
 using PremiersoftChallenge.BuildingBlocks.CQRS;
@@ -24,6 +25,7 @@ namespace Api.Endpoints
             })
             .WithName("CreateAccount")
             .Produces<CreateCheckingAccountResult>(StatusCodes.Status200OK)
+            .AddEndpointFilter<IdempotencyFilter>()
             .WithSummary("Criar uma nova conta corrente.")
             .WithDescription("Recebe os dados de CPF e senha, cria uma nova conta corrente e retorna o número da conta criada. " +
                              "Caso haja falha de validação ou regra de negócio, retorna detalhes do problema.");

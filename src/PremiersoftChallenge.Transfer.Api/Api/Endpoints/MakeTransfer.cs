@@ -1,4 +1,5 @@
 ﻿using Api.Extensions;
+using Api.Infrastructure;
 using Application.Transfer.Commands.MakeTransfer;
 using Carter;
 using PremiersoftChallenge.BuildingBlocks.CQRS;
@@ -25,6 +26,7 @@ namespace Api.Endpoints
             })
             .WithName("CreateAccount")
             .Produces<bool>(StatusCodes.Status204NoContent)
+            .AddEndpointFilter<IdempotencyFilter>()
             .WithSummary("Realizar uma transferência entre contas correntes.")
             .WithDescription("Este endpoint executa a **transferência de valores** para a conta de destino informada. " +
                              "É necessário fornecer o número da conta de destino (`targetAccountNumber`) e o valor da transferência (`value`). " +

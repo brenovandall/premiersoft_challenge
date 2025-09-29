@@ -2,6 +2,7 @@
 using Application.Data.Repository;
 using Application.Services;
 using Infrastructure.Abstractions.Commands;
+using Infrastructure.Abstractions.Queries;
 using Infrastructure.Authentication;
 using Infrastructure.Http;
 using Infrastructure.Repository;
@@ -18,10 +19,13 @@ namespace Infrastructure
         {
             services.AddScoped<ISqlRawCommandFactory, SqlRawCommandFactory>();
             services.AddScoped<ISqlRawCommand, DapperSqlRawCommand>();
+            services.AddScoped<IQueryExecutorFactory, QueryExecutorFactory>();
+            services.AddScoped<IQueryExecutor, DapperQueryExecutor>();
 
             services.AddScoped<ITransferRepository, TransferRepository>();
 
             services.AddScoped<ITransferService, TransferService>();
+            services.AddScoped<IIdempotencyService, IdempotencyService>();
 
             services.AddSecurityBaseAuthentication(configuration["Jwt:Secret"]!, configuration["Jwt:Issuer"], configuration["Jwt:Audience"]);
             services.AddSecurityBaseAuthorization();

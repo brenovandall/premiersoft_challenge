@@ -38,6 +38,7 @@ namespace PremiersoftChallenge.Security
             services.AddSwaggerGen(o =>
             {
                 o.CustomSchemaIds(id => id.FullName!.Replace('+', '-'));
+                o.OperationFilter<AddHeaderParameter>();
 
                 var securityScheme = new OpenApiSecurityScheme
                 {

@@ -1,4 +1,5 @@
 ﻿using Api.Extensions;
+using Api.Infrastructure;
 using Application.Transaction.Commands.MakeTransaction;
 using Carter;
 using PremiersoftChallenge.BuildingBlocks.CQRS;
@@ -27,6 +28,7 @@ namespace Api.Endpoints
             .WithName("PerformTransaction")
             .RequireAuthorization()
             .Produces<bool>(StatusCodes.Status204NoContent)
+            .AddEndpointFilter<IdempotencyFilter>()
             .WithSummary("Realizar transação na conta corrente")
             .WithDescription("Executa uma transação de crédito ou débito na conta corrente informada ou autenticada. " +
                              "Requer autenticação e utiliza os dados enviados na requisição (número da conta, valor e tipo de transação). " +
