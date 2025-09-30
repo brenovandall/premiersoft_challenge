@@ -16,3 +16,5 @@ app.UsePresentationServices();
 await InitialiseSqliteDatabase.CreateTablesAsync();
 
 app.Run();
+
+public partial class Program;

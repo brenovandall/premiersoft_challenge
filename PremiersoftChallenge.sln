@@ -33,13 +33,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Premi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\PremiersoftChallenge.Transfer.Api\Api\Api.csproj", "{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.ArchitectureTests", "tests\PremiersoftChallenge.ArchitectureTests\PremiersoftChallenge.ArchitectureTests.csproj", "{C0D9A031-0E6B-4897-B742-E77D977AF7DE}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.SharedKernel", "src\PremiersoftChallenge.SharedKernel\PremiersoftChallenge.SharedKernel.csproj", "{8284B587-4E09-43B4-B2CE-98B073854724}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.Security", "src\PremiersoftChallenge.Security\PremiersoftChallenge.Security.csproj", "{F146DC52-FDEF-46C8-8490-C463D410E1BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.CheckingAccount.ArchitectureTests", "tests\PremiersoftChallenge.CheckingAccount.ArchitectureTests\PremiersoftChallenge.CheckingAccount.ArchitectureTests.csproj", "{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.Transfer.ArchitectureTests", "tests\PremiersoftChallenge.Transfer.ArchitectureTests\PremiersoftChallenge.Transfer.ArchitectureTests.csproj", "{A261AA86-B244-432F-AD10-B68C754B4826}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CheckingAccount", "CheckingAccount", "{AF24C8E2-4916-4234-AA3E-366121C62E6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transfer", "Transfer", "{E7F461B1-B089-4B00-A045-6DEF4C696808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\CheckingAccount - Application.UnitTests\Application.UnitTests\Application.UnitTests.csproj", "{9043CD5A-2090-4577-AFBB-81AE6A812044}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\Transfer - Application.UnitTests\Application.UnitTests\Application.UnitTests.csproj", "{16397B50-7226-434E-917E-6F41C287521E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +93,6 @@ Global
 		{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0D9A031-0E6B-4897-B742-E77D977AF7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0D9A031-0E6B-4897-B742-E77D977AF7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0D9A031-0E6B-4897-B742-E77D977AF7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0D9A031-0E6B-4897-B742-E77D977AF7DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,6 +105,22 @@ Global
 		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F146DC52-FDEF-46C8-8490-C463D410E1BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A261AA86-B244-432F-AD10-B68C754B4826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A261AA86-B244-432F-AD10-B68C754B4826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A261AA86-B244-432F-AD10-B68C754B4826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A261AA86-B244-432F-AD10-B68C754B4826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9043CD5A-2090-4577-AFBB-81AE6A812044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9043CD5A-2090-4577-AFBB-81AE6A812044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9043CD5A-2090-4577-AFBB-81AE6A812044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9043CD5A-2090-4577-AFBB-81AE6A812044}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16397B50-7226-434E-917E-6F41C287521E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16397B50-7226-434E-917E-6F41C287521E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16397B50-7226-434E-917E-6F41C287521E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16397B50-7226-434E-917E-6F41C287521E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,9 +138,14 @@ Global
 		{B18231DE-A29A-4BA7-A687-380BB24EEBDA} = {113D9E02-3F44-4742-ABAD-F47C4509CD55}
 		{3AF00264-3A1A-40AE-9F7E-5553BFD499D5} = {113D9E02-3F44-4742-ABAD-F47C4509CD55}
 		{2EDDD8CD-5AD5-4278-AE8A-0A36E4B68CD2} = {113D9E02-3F44-4742-ABAD-F47C4509CD55}
-		{C0D9A031-0E6B-4897-B742-E77D977AF7DE} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
 		{8284B587-4E09-43B4-B2CE-98B073854724} = {2BED4629-96F2-4442-9941-8048450CD2B7}
 		{F146DC52-FDEF-46C8-8490-C463D410E1BF} = {2BED4629-96F2-4442-9941-8048450CD2B7}
+		{5B9AA9F5-EB6D-4032-BCAA-AA49C28A07CD} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
+		{A261AA86-B244-432F-AD10-B68C754B4826} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
+		{AF24C8E2-4916-4234-AA3E-366121C62E6B} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
+		{E7F461B1-B089-4B00-A045-6DEF4C696808} = {FEA3D2B4-C976-40D4-819E-C1DAAA25EF75}
+		{9043CD5A-2090-4577-AFBB-81AE6A812044} = {AF24C8E2-4916-4234-AA3E-366121C62E6B}
+		{16397B50-7226-434E-917E-6F41C287521E} = {E7F461B1-B089-4B00-A045-6DEF4C696808}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF00D3E9-1CE8-4108-8080-95EC6364EDE3}
