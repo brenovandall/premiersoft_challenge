@@ -31,7 +31,7 @@ namespace Application.UnitTests
         {
             var command = new LoginCheckingAccountCommand("aaa", "aaa");
             _repositoryMock.Setup(r => r.GetByAccountNumberOrName(command.Identifier))
-                           .Returns((Domain.CheckingAccount?)null);
+                           .ReturnsAsync((Domain.CheckingAccount?)null);
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
@@ -45,7 +45,7 @@ namespace Application.UnitTests
             var account = (Domain.CheckingAccount)Domain.CheckingAccount.Create(1, "aaa", "aaa", "aaa");
             var command = new LoginCheckingAccountCommand(account.Name, "aaa");
 
-            _repositoryMock.Setup(r => r.GetByAccountNumberOrName(account.Name)).Returns(account);
+            _repositoryMock.Setup(r => r.GetByAccountNumberOrName(account.Name)).ReturnsAsync(account);
             _passwordHasherMock.Setup(p => p.Verify(command.Password, account.Password, account.Salt)).Returns(false);
 
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -61,7 +61,7 @@ namespace Application.UnitTests
             var command = new LoginCheckingAccountCommand(account.Name, "bbb");
             const string fakeToken = "JWT_TOKEN";
 
-            _repositoryMock.Setup(r => r.GetByAccountNumberOrName(account.Name)).Returns(account);
+            _repositoryMock.Setup(r => r.GetByAccountNumberOrName(account.Name)).ReturnsAsync(account);
             _passwordHasherMock.Setup(p => p.Verify(command.Password, account.Password, account.Salt)).Returns(true);
             _tokenProviderMock.Setup(t => t.Create(account)).Returns(fakeToken);
 

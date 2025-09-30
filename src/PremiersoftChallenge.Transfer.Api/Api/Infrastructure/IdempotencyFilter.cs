@@ -24,7 +24,7 @@ namespace Api.Infrastructure
             }
 
             var path = httpContext.Request.Path;
-            var persisted = _idempotencyService.GetByKeyAndRequest(idempotencyKey, path);
+            var persisted = await _idempotencyService.GetByKeyAndRequest(idempotencyKey, path);
             if (persisted is not null)
             {
                 return persisted.Response;
@@ -34,7 +34,7 @@ namespace Api.Infrastructure
 
             if (result is IStatusCodeHttpResult { StatusCode: >= 200 and < 300 } and IValueHttpResult valueResult)
             {
-                _idempotencyService.Add(
+                await _idempotencyService.Add(
                     GetIdempotentObject(idempotencyKey, path, JsonSerializer.Serialize(valueResult.Value)));
             }
 

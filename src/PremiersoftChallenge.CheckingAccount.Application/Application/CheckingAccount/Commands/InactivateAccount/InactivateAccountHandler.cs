@@ -28,7 +28,7 @@ namespace Application.CheckingAccount.Commands.InactivateAccount
         {
             try
             {
-                var account = _repository.GetById(_loggedContext.Id);
+                var account = await _repository.GetById(_loggedContext.Id);
                 if (account == null || account.Status == CheckingAccountStatus.Inactive)
                 {
                     return Result.Failure<bool>(CheckingAccountErrors.InvalidCredentials);
@@ -40,7 +40,7 @@ namespace Application.CheckingAccount.Commands.InactivateAccount
                     return Result.Failure<bool>(CheckingAccountErrors.InvalidCredentials);
                 }
 
-                _repository.Update(account.Inactivate());
+                await _repository.Update(account.Inactivate());
 
                 return Result.Success(true);
             }

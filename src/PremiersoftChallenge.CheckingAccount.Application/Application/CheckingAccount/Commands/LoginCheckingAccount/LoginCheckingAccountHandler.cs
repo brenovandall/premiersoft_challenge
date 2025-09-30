@@ -24,7 +24,7 @@ namespace Application.CheckingAccount.Commands.LoginCheckingAccount
 
         public async Task<Result<string>> Handle(LoginCheckingAccountCommand command, CancellationToken cancellationToken)
         {
-            var account = _repository.GetByAccountNumberOrName(command.Identifier);
+            var account = await _repository.GetByAccountNumberOrName(command.Identifier);
             if (account == null)
             {
                 return Result.Failure<string>(CheckingAccountErrors.InvalidCredentials);

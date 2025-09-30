@@ -14,7 +14,7 @@ namespace Infrastructure.Services
             _queryExecutorFactory = queryExecutorFactory;
         }
 
-        public GetTransactionByIdResponse? GetById(Guid id)
+        public async Task<GetTransactionByIdResponse?> GetById(Guid id)
         {
             var sql = @"
 SELECT
@@ -26,7 +26,7 @@ SELECT
 FROM movimento WHERE idmovimento = @id";
             var param = new { id };
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<GetTransactionByIdResponse?>(param);
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<GetTransactionByIdResponse?>(param);
         }
 
         private IQueryExecutor GetSqlQueryFactory()

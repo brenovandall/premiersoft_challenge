@@ -14,7 +14,7 @@ namespace Infrastructure.Repository
             _sqlRawCommandFactory = sqlRawCommandFactory;
         }
 
-        public void Add(ITransaction transaction)
+        public async Task Add(ITransaction transaction)
         {
             var sql = "INSERT INTO movimento VALUES (@id, @accountId, @transactionDate, @flow, @value)";
             var param = new
@@ -26,7 +26,7 @@ namespace Infrastructure.Repository
                 value = transaction.Value
             };
 
-            GetSqlCommandFactory().SetCommand(sql).Execute(param);
+            await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
         private ISqlRawCommand GetSqlCommandFactory()

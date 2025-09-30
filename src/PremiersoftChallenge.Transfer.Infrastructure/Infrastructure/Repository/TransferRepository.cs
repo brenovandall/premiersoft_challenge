@@ -14,7 +14,7 @@ namespace Infrastructure.Repository
             _sqlRawCommandFactory = sqlRawCommandFactory;
         }
 
-        public void Add(ITransfer transfer)
+        public async Task Add(ITransfer transfer)
         {
             var sql = @"INSERT INTO transferencia VALUES (@id, @sourceCheckingAccountId,
 @targetCheckingAccountId, @transactionDate, @value)";
@@ -27,7 +27,7 @@ namespace Infrastructure.Repository
                 value = transfer.Value,
             };
 
-            GetSqlCommandFactory().SetCommand(sql).Execute(param);
+            await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
         private ISqlRawCommand GetSqlCommandFactory()

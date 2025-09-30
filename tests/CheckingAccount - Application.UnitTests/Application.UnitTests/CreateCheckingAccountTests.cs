@@ -41,7 +41,7 @@ namespace Application.UnitTests
             var command = new CreateCheckingAccountCommand(validCpf, RandomPassword);
 
             _passwordHasherMock.Setup(p => p.Hash(command.Password)).Returns("hashed-salt");
-            _repositoryMock.Setup(r => r.Count()).Returns(0);
+            _repositoryMock.Setup(r => r.Count()).ReturnsAsync(0);
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

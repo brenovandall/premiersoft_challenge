@@ -46,7 +46,7 @@ namespace Application.Transfer.Commands.MakeTransfer
                     return await Fallback(sourceTransactionId, targetTransactionId, command.TargetAccountNumber, normalizedValue);
 
                 var transfer = Domain.Transfer.Create(_loggedContext.Id.ToString(), targetId.Value.ToString(), normalizedValue);
-                _transferRepository.Add(transfer);
+                await _transferRepository.Add(transfer);
 
                 return Result.Success(true);
             }

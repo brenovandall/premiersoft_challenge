@@ -4,7 +4,7 @@ namespace Application.Services
 {
     public interface IIdempotencyService
     {
-        void Add(IdempotentDto dto);
-        IdempotentDto? GetByKeyAndRequest(string key, string request);
+        Task Add(IdempotentDto dto);
+        Task<IdempotentDto?> GetByKeyAndRequest(string key, string request);
     }
 }

@@ -14,7 +14,7 @@ namespace Infrastructure.Services
             _queryExecutorFactory = queryExecutorFactory;
         }
 
-        public GetBalanceResponse? GetAccountInfo(Guid checkingAccountId)
+        public async Task<GetBalanceResponse?> GetAccountInfo(Guid checkingAccountId)
         {
             var sql = @"
 SELECT
@@ -27,7 +27,7 @@ JOIN movimento m ON m.idcontacorrente = a.idcontacorrente
 GROUP BY a.numero, a.nome";
             var param = new { id = checkingAccountId };
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<GetBalanceResponse?>(param);
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<GetBalanceResponse?>(param);
         }
 
         private IQueryExecutor GetSqlQueryFactory()

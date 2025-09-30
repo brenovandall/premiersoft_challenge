@@ -4,6 +4,6 @@ namespace Application.Services
 {
     public interface ITransactionService
     {
-        GetTransactionByIdResponse? GetById(Guid id);
+        Task<GetTransactionByIdResponse?> GetById(Guid id);
     }
 }

@@ -35,7 +35,7 @@ namespace Application.UnitTests
         public async Task Handle_ShouldReturnFailure_WhenAccountNotFound()
         {
             _loggedContextMock.Setup(l => l.Id).Returns(Guid.NewGuid());
-            _repositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Domain.CheckingAccount?)null);
+            _repositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync((Domain.CheckingAccount?)null);
 
             var command = new InactivateAccountCommand(RandomPassword);
 
@@ -52,7 +52,7 @@ namespace Application.UnitTests
             account.Inactivate();
 
             _loggedContextMock.Setup(l => l.Id).Returns(account.Id);
-            _repositoryMock.Setup(r => r.GetById(account.Id)).Returns(account);
+            _repositoryMock.Setup(r => r.GetById(account.Id)).ReturnsAsync(account);
 
             var command = new InactivateAccountCommand(RandomPassword);
 
@@ -68,7 +68,7 @@ namespace Application.UnitTests
             var account = (Domain.CheckingAccount)Domain.CheckingAccount.Create(1, "aaa", "aaa", "aaa");
 
             _loggedContextMock.Setup(l => l.Id).Returns(account.Id);
-            _repositoryMock.Setup(r => r.GetById(account.Id)).Returns(account);
+            _repositoryMock.Setup(r => r.GetById(account.Id)).ReturnsAsync(account);
 
             _passwordHasherMock
                 .Setup(p => p.Verify(RandomPassword, account.Password, account.Salt))
@@ -88,7 +88,7 @@ namespace Application.UnitTests
             var account = (Domain.CheckingAccount)Domain.CheckingAccount.Create(1, "aaa", "aaa", "aaa");
 
             _loggedContextMock.Setup(l => l.Id).Returns(account.Id);
-            _repositoryMock.Setup(r => r.GetById(account.Id)).Returns(account);
+            _repositoryMock.Setup(r => r.GetById(account.Id)).ReturnsAsync(account);
 
             _passwordHasherMock
                 .Setup(p => p.Verify(RandomPassword, account.Password, account.Salt))
@@ -114,7 +114,7 @@ namespace Application.UnitTests
             account.Setup(a => a.Inactivate()).Throws(new DomainException("Error description"));
 
             _loggedContextMock.Setup(l => l.Id).Returns(Guid.NewGuid());
-            _repositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).Returns(account.Object);
+            _repositoryMock.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(account.Object);
 
             _passwordHasherMock
                 .Setup(p => p.Verify(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))

@@ -22,7 +22,7 @@ namespace Application.Transaction.Queries.GetTransactionById
                     Error.Failure("INVALID_OPERATION", $"Não foi possível converter o valor {parsedTransactionId} para o formato esperado."));
             }
 
-            var transaction = _transactionService.GetById(parsedTransactionId);
+            var transaction = await _transactionService.GetById(parsedTransactionId);
             if (transaction == null)
             {
                 return Result.Failure<GetTransactionByIdResult>(

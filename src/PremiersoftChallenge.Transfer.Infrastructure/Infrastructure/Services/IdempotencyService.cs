@@ -17,7 +17,7 @@ namespace Infrastructure.Services
             _queryExecutorFactory = queryExecutorFactory;
         }
 
-        public void Add(IdempotentDto dto)
+        public async Task Add(IdempotentDto dto)
         {
             var sql = "INSERT INTO idempotencia VALUES (@key, @request, @response)";
             var param = new
@@ -27,10 +27,10 @@ namespace Infrastructure.Services
                 response = dto.Response
             };
 
-            GetSqlCommandFactory().SetCommand(sql).Execute(param);
+            await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
-        public IdempotentDto? GetByKeyAndRequest(string key, string request)
+        public async Task<IdempotentDto?> GetByKeyAndRequest(string key, string request)
         {
             var sql = @"
 SELECT
@@ -40,7 +40,7 @@ SELECT
 FROM idempotencia WHERE chave_idempotencia = @key AND requisicao = @request";
             var param = new { key, request };
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<IdempotentDto?>(param);
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<IdempotentDto?>(param);
         }
 
         private IQueryExecutor GetSqlQueryFactory()

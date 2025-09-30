@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
             _queryExecutorFactory = queryExecutorFactory;
         }
 
-        public void Add(ICheckingAccount checkingAccount)
+        public async Task Add(ICheckingAccount checkingAccount)
         {
             var sql = "INSERT INTO contacorrente VALUES (@id, @number, @name, @active, @password, @salt)";
             var param = new
@@ -31,17 +31,17 @@ namespace Infrastructure.Repository
                 salt = checkingAccount.Salt
             };
 
-            GetSqlCommandFactory().SetCommand(sql).Execute(param);
+            await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
-        public long Count()
+        public async Task<long> Count()
         {
             var sql = "SELECT COUNT(idcontacorrente) Result FROM contacorrente";
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<long>();
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<long>();
         }
 
-        public ICheckingAccount? GetById(Guid id)
+        public async Task<ICheckingAccount?> GetById(Guid id)
         {
             var sql = @"
 SELECT
@@ -54,10 +54,10 @@ SELECT
 FROM contacorrente WHERE idcontacorrente = @id";
             var param = new { id };
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<CheckingAccount>(param);
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<CheckingAccount>(param);
         }
 
-        public ICheckingAccount? GetByAccountNumberOrName(string searchString)
+        public async Task<ICheckingAccount?> GetByAccountNumberOrName(string searchString)
         {
             var sql = @"
 SELECT
@@ -75,10 +75,10 @@ FROM contacorrente WHERE (nome = @name OR numero = @number) AND ativo = @active"
                 active = (int)CheckingAccountStatus.Active
             };
 
-            return GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefault<CheckingAccount>(param);
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<CheckingAccount>(param);
         }
 
-        public void Update(ICheckingAccount checkingAccount)
+        public async Task Update(ICheckingAccount checkingAccount)
         {
             var sql = @"UPDATE contacorrente SET numero = @number, nome = @name, ativo = @active, senha = @password,
 salt = @salt WHERE idcontacorrente = @id";
@@ -92,7 +92,7 @@ salt = @salt WHERE idcontacorrente = @id";
                 salt = checkingAccount.Salt
             };
 
-            GetSqlCommandFactory().SetCommand(sql).Execute(param);
+            await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
         private IQueryExecutor GetSqlQueryFactory()

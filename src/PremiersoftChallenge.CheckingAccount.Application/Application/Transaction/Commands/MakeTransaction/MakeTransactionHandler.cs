@@ -30,7 +30,7 @@ namespace Application.Transaction.Commands.MakeTransaction
         {
             try
             {
-                var account = GetCheckingAccount(_loggedContext.Id, null);
+                var account = await GetCheckingAccount(_loggedContext.Id, null);
                 var accountNumber = command.AccountNumber;
 
                 if (!accountNumber.HasValue)
@@ -45,7 +45,7 @@ namespace Application.Transaction.Commands.MakeTransaction
                     }
                     else
                     {
-                        account = GetCheckingAccount(null, accountNumber);
+                        account = await GetCheckingAccount(null, accountNumber);
                     }
                 }
 
@@ -56,7 +56,7 @@ namespace Application.Transaction.Commands.MakeTransaction
                 }
 
                 var transaction = Domain.Transaction.Create(parsedRequestId, account.Id, command.TransactionFlow, command.Value);
-                _transactionRepository.Add(transaction);
+                await _transactionRepository.Add(transaction);
 
                 return Result.Success(true);
             }
@@ -70,11 +70,11 @@ namespace Application.Transaction.Commands.MakeTransaction
             }
         }
 
-        private ICheckingAccount GetCheckingAccount(Guid? id, long? number)
+        private async Task<ICheckingAccount> GetCheckingAccount(Guid? id, long? number)
         {
             ICheckingAccount? account = id is not null
-                ? _checkingAccountRepository.GetById(id.Value)
-                : _checkingAccountRepository.GetByAccountNumberOrName(number!.Value.ToString());
+                ? await _checkingAccountRepository.GetById(id.Value)
+                : await _checkingAccountRepository.GetByAccountNumberOrName(number!.Value.ToString());
 
             if (account is null)
                 throw new InvalidAccountException(nameof(account));

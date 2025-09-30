@@ -27,10 +27,10 @@ namespace Application.CheckingAccount.Commands.CreateCheckingAccount
             var parts = passwordHash.Split('-');
             var password = parts[0];
             var salt = parts[1];
-            var number = _repository.Count() + 1;
+            var number = await _repository.Count() + 1;
             var checkingAccount = Domain.CheckingAccount.Create(number, command.Cpf, password, salt);
 
-            _repository.Add(checkingAccount);
+            await _repository.Add(checkingAccount);
 
             return new CreateCheckingAccountResult(checkingAccount.Number);
         }

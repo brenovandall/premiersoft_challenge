@@ -4,6 +4,6 @@ namespace Application.Services
 {
     public interface ICheckingAccountService
     {
-        GetBalanceResponse? GetAccountInfo(Guid checkingAccountId);
+        Task<GetBalanceResponse?> GetAccountInfo(Guid checkingAccountId);
     }
 }

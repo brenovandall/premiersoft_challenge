@@ -31,7 +31,7 @@ namespace Application.UnitTests
             _activeAccount = (Domain.CheckingAccount)Domain.CheckingAccount.Create(1, "aaa", "aaa", "aaa");
 
             _loggedContextMock.Setup(c => c.Id).Returns(_activeAccount.Id);
-            _accountRepoMock.Setup(r => r.GetById(_activeAccount.Id)).Returns(_activeAccount);
+            _accountRepoMock.Setup(r => r.GetById(_activeAccount.Id)).ReturnsAsync(_activeAccount);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Application.UnitTests
         [Fact]
         public async Task Handle_ShouldFail_WhenAccountNumberDifferentAndFlowIsNotC()
         {
-            _accountRepoMock.Setup(r => r.GetByAccountNumberOrName("999")).Returns(_activeAccount);
+            _accountRepoMock.Setup(r => r.GetByAccountNumberOrName("999")).ReturnsAsync(_activeAccount);
 
             var command = new MakeTransactionCommand(Guid.NewGuid().ToString(), 999, 50, "D");
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -61,7 +61,7 @@ namespace Application.UnitTests
         public async Task Handle_ShouldSucceed_WhenAccountNumberDifferntAndFlowIsC()
         {
             var otherAccount = (Domain.CheckingAccount)Domain.CheckingAccount.Create(2, "aaa", "aaa", "aaa");
-            _accountRepoMock.Setup(r => r.GetByAccountNumberOrName(It.IsAny<string>())).Returns(otherAccount);
+            _accountRepoMock.Setup(r => r.GetByAccountNumberOrName(It.IsAny<string>())).ReturnsAsync(otherAccount);
 
             var command = new MakeTransactionCommand(Guid.NewGuid().ToString(), 2, 200, "C");
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -84,7 +84,7 @@ namespace Application.UnitTests
         [Fact]
         public async Task Handle_ShouldFail_WhenAccountNotFound()
         {
-            _accountRepoMock.Setup(r => r.GetById(_activeAccount.Id)).Returns((Domain.CheckingAccount?)null);
+            _accountRepoMock.Setup(r => r.GetById(_activeAccount.Id)).ReturnsAsync((Domain.CheckingAccount?)null);
 
             var command = new MakeTransactionCommand(Guid.NewGuid().ToString(), null, 50, "D");
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -98,7 +98,7 @@ namespace Application.UnitTests
         {
             var inactiveAccount = (Domain.CheckingAccount)Domain.CheckingAccount.Create(3, "aaa", "aaa", "aaa");
             inactiveAccount.Inactivate();
-            _accountRepoMock.Setup(r => r.GetById(inactiveAccount.Id)).Returns(inactiveAccount);
+            _accountRepoMock.Setup(r => r.GetById(inactiveAccount.Id)).ReturnsAsync(inactiveAccount);
             _loggedContextMock.Setup(c => c.Id).Returns(inactiveAccount.Id);
 
             var command = new MakeTransactionCommand(Guid.NewGuid().ToString(), null, 100, "D");

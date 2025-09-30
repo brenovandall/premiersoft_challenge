@@ -16,8 +16,7 @@ namespace Application.CheckingAccount.Queries.GetCheckingAccountIdByNumber
 
         public async Task<Result<GetCheckingAccountIdByNumberResult>> Handle(GetCheckingAccountIdByNumberQuery query, CancellationToken cancellationToken)
         {
-            var account = _repository.GetByAccountNumberOrName(query.AccountNumber.ToString());
-
+            var account = await _repository.GetByAccountNumberOrName(query.AccountNumber.ToString());
             if (account == null)
             {
                 return Result.Failure<GetCheckingAccountIdByNumberResult>(CheckingAccountErrors.InvalidAccount);
