@@ -58,20 +58,27 @@ namespace Application.Transfer.Commands.MakeTransfer
 
         private async Task<Result<bool>> Fallback(string sourceTransactionId, string targetTransactionId, long targetAccountNumber, double value)
         {
-            var sourceFallback = await HandleFallbackAsync(sourceTransactionId, null, value, Credit);
-
-            if (sourceFallback.IsSuccess)
+            try
             {
-                var targetFallback = await HandleFallbackAsync(targetTransactionId, targetAccountNumber, value, Debit);
-                if (targetFallback.IsFailure) return Result.Failure<bool>(targetFallback.Error);
-            }
-            else
-            {
-                return Result.Failure<bool>(sourceFallback.Error);
-            }
+                var sourceFallback = await HandleFallbackAsync(sourceTransactionId, null, value, Credit);
 
-            return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao atender a requisição." +
-                                                                      "Os envolvidos foram reembolsados."));
+                if (sourceFallback.IsSuccess)
+                {
+                    var targetFallback = await HandleFallbackAsync(targetTransactionId, targetAccountNumber, value, Debit);
+                    if (targetFallback.IsFailure) return Result.Failure<bool>(targetFallback.Error);
+                }
+                else
+                {
+                    return Result.Failure<bool>(sourceFallback.Error);
+                }
+
+                return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao atender a requisição." +
+                                                                          "Os envolvidos foram reembolsados."));
+            }
+            catch (Exception)
+            {
+                return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao realizar um reembolso."));
+            }
         }
 
         private async Task<Result> HandleFallbackAsync(string transactionId, long? accountNumber, double value, string flow)
