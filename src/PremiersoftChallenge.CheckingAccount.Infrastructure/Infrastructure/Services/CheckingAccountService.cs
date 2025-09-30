@@ -1,7 +1,7 @@
 ﻿using Application.CheckingAccount.Queries.GetBalance;
 using Application.Services;
-using Infrastructure.Abstractions.Queries;
-using Infrastructure.Extensions;
+using PremiersoftChallenge.Data;
+using PremiersoftChallenge.Data.Abstractions.Queries;
 
 namespace Infrastructure.Services
 {
@@ -32,7 +32,7 @@ GROUP BY a.numero, a.nome";
 
         private IQueryExecutor GetSqlQueryFactory()
         {
-            var factory = _queryExecutorFactory.Create(OrmsProviders.Dapper);
+            var factory = _queryExecutorFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));

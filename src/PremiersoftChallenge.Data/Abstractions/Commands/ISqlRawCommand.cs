@@ -1,9 +1,10 @@
 ﻿using System.Data;
 
-namespace Infrastructure.Abstractions.Commands
+namespace PremiersoftChallenge.Data.Abstractions.Commands
 {
     public interface ISqlRawCommand
     {
+        string OrmProvider { get; }
         string Strategy { get; }
 
         int? Execute(object? parameters = null, IDbConnection? connection = null, IDbTransaction? transaction = null);

@@ -1,14 +1,15 @@
 ﻿using Application.Authentication;
 using Application.Data.Repository;
 using Application.Services;
-using Infrastructure.Abstractions.Commands;
-using Infrastructure.Abstractions.Queries;
 using Infrastructure.Authentication;
+using Infrastructure.Data;
 using Infrastructure.Http;
 using Infrastructure.Repository;
 using Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PremiersoftChallenge.Data.Abstractions.Commands;
+using PremiersoftChallenge.Data.Abstractions.Queries;
 using PremiersoftChallenge.Security;
 
 namespace Infrastructure
@@ -18,9 +19,9 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ISqlRawCommandFactory, SqlRawCommandFactory>();
-            services.AddScoped<ISqlRawCommand, DapperSqlRawCommand>();
+            services.AddScoped<ISqlRawCommand, SqliteSqlRawCommand>();
             services.AddScoped<IQueryExecutorFactory, QueryExecutorFactory>();
-            services.AddScoped<IQueryExecutor, DapperQueryExecutor>();
+            services.AddScoped<IQueryExecutor, SqliteQueryExecutor>();
 
             services.AddScoped<ITransferRepository, TransferRepository>();
 

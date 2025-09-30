@@ -1,7 +1,7 @@
 ﻿using Application.Data.Repository;
 using Domain;
-using Infrastructure.Abstractions.Commands;
-using Infrastructure.Extensions;
+using PremiersoftChallenge.Data;
+using PremiersoftChallenge.Data.Abstractions.Commands;
 
 namespace Infrastructure.Repository
 {
@@ -32,7 +32,7 @@ namespace Infrastructure.Repository
 
         private ISqlRawCommand GetSqlCommandFactory()
         {
-            var factory = _sqlRawCommandFactory.Create(OrmsProviders.Dapper);
+            var factory = _sqlRawCommandFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));

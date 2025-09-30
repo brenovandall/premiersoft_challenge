@@ -1,9 +1,9 @@
 ﻿using Application.Data.Repository;
 using Domain;
 using Domain.Enums;
-using Infrastructure.Abstractions.Commands;
-using Infrastructure.Abstractions.Queries;
-using Infrastructure.Extensions;
+using PremiersoftChallenge.Data;
+using PremiersoftChallenge.Data.Abstractions.Commands;
+using PremiersoftChallenge.Data.Abstractions.Queries;
 
 namespace Infrastructure.Repository
 {
@@ -97,7 +97,7 @@ salt = @salt WHERE idcontacorrente = @id";
 
         private IQueryExecutor GetSqlQueryFactory()
         {
-            var factory = _queryExecutorFactory.Create(OrmsProviders.Dapper);
+            var factory = _queryExecutorFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));
@@ -107,7 +107,7 @@ salt = @salt WHERE idcontacorrente = @id";
 
         private ISqlRawCommand GetSqlCommandFactory()
         {
-            var factory = _sqlRawCommandFactory.Create(OrmsProviders.Dapper);
+            var factory = _sqlRawCommandFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));

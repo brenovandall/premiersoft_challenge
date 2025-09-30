@@ -1,7 +1,7 @@
 ﻿using Application.Services;
 using Application.Transaction.Queries.GetTransactionById;
-using Infrastructure.Abstractions.Queries;
-using Infrastructure.Extensions;
+using PremiersoftChallenge.Data;
+using PremiersoftChallenge.Data.Abstractions.Queries;
 
 namespace Infrastructure.Services
 {
@@ -31,7 +31,7 @@ FROM movimento WHERE idmovimento = @id";
 
         private IQueryExecutor GetSqlQueryFactory()
         {
-            var factory = _queryExecutorFactory.Create(OrmsProviders.Dapper);
+            var factory = _queryExecutorFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));

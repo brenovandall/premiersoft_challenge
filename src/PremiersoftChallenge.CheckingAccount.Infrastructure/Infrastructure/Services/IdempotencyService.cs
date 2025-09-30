@@ -1,8 +1,8 @@
 ﻿using Application.Dto;
 using Application.Services;
-using Infrastructure.Abstractions.Commands;
-using Infrastructure.Abstractions.Queries;
-using Infrastructure.Extensions;
+using PremiersoftChallenge.Data;
+using PremiersoftChallenge.Data.Abstractions.Commands;
+using PremiersoftChallenge.Data.Abstractions.Queries;
 
 namespace Infrastructure.Services
 {
@@ -45,7 +45,7 @@ FROM idempotencia WHERE chave_idempotencia = @key AND requisicao = @request";
 
         private IQueryExecutor GetSqlQueryFactory()
         {
-            var factory = _queryExecutorFactory.Create(OrmsProviders.Dapper);
+            var factory = _queryExecutorFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));
@@ -55,7 +55,7 @@ FROM idempotencia WHERE chave_idempotencia = @key AND requisicao = @request";
 
         private ISqlRawCommand GetSqlCommandFactory()
         {
-            var factory = _sqlRawCommandFactory.Create(OrmsProviders.Dapper);
+            var factory = _sqlRawCommandFactory.Create(OrmProviders.Dapper, DbStrategies.Sqlite);
 
             if (factory == null)
                 throw new Exception(nameof(factory));

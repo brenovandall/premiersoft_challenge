@@ -1,9 +1,10 @@
 ﻿using System.Data;
 
-namespace Infrastructure.Abstractions.Queries
+namespace PremiersoftChallenge.Data.Abstractions.Queries
 {
     public interface IQueryExecutor
     {
+        string OrmProvider { get; }
         string Strategy { get; }
 
         IEnumerable<T> Fetch<T>(object? parameters = null, IDbConnection? connection = null, IDbTransaction? transaction = null);

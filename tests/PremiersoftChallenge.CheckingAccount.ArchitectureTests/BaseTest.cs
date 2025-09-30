@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Infrastructure.Abstractions.Commands;
-using Application.Dto;
+﻿using Application.Dto;
+using Infrastructure.Data;
+using System.Reflection;
 
 namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
 {
@@ -8,7 +8,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
     {
         protected static readonly Assembly DomainAssembly = typeof(Domain.CheckingAccount).Assembly;
         protected static readonly Assembly ApplicationAssembly = typeof(IdempotentDto).Assembly;
-        protected static readonly Assembly InfrastructureAssembly = typeof(SqlRawCommandFactory).Assembly;
+        protected static readonly Assembly InfrastructureAssembly = typeof(SqliteQueryExecutor).Assembly;
         protected static readonly Assembly PresentationAssembly = typeof(Program).Assembly;
     }
 }

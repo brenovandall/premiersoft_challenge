@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PremiersoftChallenge.Data\PremiersoftChallenge.Data.csproj" />
     <ProjectReference Include="..\..\PremiersoftChallenge.Security\PremiersoftChallenge.Security.csproj" />
     <ProjectReference Include="..\..\PremiersoftChallenge.Transfer.Application\Application\Application.csproj" />
   </ItemGroup>
