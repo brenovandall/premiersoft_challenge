@@ -1,5 +1,5 @@
 # Premiersoft Challenge
-Versão: 1.0.0 - 30-09-2025
+27-09-2025 - 30-09-2025
 
 ## O que é?
 Este projeto foi desenvolvido como parte de um desafio técnico para a empresa **Premiersoft**.
