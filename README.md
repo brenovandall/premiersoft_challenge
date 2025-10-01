@@ -43,7 +43,8 @@ dotnet restore
 
 Rode a aplicação:
 ```bash
-dotnet run --project src/CheckingAccount.Api
+dotnet run --project src/PremiersoftChallenge.CheckingAccount.Api/Api/Api.csproj
+dotnet run --project src/PremiersoftChallenge.Transfer.Api/Api/Api.csproj
 ```
 
 ## Licença
