@@ -1,5 +1,4 @@
 ﻿using NetArchTest.Rules;
-using Shouldly;
 
 namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
 {
@@ -13,7 +12,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(ApplicationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact]
@@ -24,7 +23,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(InfrastructureAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact]
@@ -35,7 +34,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact]
@@ -46,7 +45,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(InfrastructureAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact]
@@ -57,7 +56,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact]
@@ -68,7 +67,7 @@ namespace PremiersoftChallenge.CheckingAccount.ArchitectureTests
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            Assert.True(result.IsSuccessful);
         }
     }
 }
