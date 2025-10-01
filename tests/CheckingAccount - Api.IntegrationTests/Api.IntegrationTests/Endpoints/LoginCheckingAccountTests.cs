@@ -40,7 +40,7 @@ namespace Api.IntegrationTests.Endpoints
         }
 
         [Fact]
-        public async Task Login_ShouldFail_WhenAccountDoesNotExist()
+        public async Task POST_ShouldFail_WhenAccountDoesNotExist()
         {
             var loginRequest = new { Identifier = "", Password = "" };
             var loginResponse = await _client.PostAsJsonAsync("/v1/checkingAccount/login", loginRequest);

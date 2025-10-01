@@ -19,7 +19,6 @@ namespace Api.IntegrationTests.Endpoints
             _connectionString = factory.Configuration.GetConnectionString("DbConnection")!;
         }
 
-        // todo: validar se existe conta ativa com o CPF
         [Fact]
         public async Task POST_ShouldReturn200_WhenValidRequest()
         {
