@@ -72,7 +72,7 @@ namespace Application.Transfer.Commands.MakeTransfer
                     return Result.Failure<bool>(sourceFallback.Error);
                 }
 
-                return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao atender a requisição." +
+                return Result.Failure<bool>(Error.Problem("SERVER_ERROR", "Um erro inesperado aconteceu ao atender a requisição. " +
                                                                           "Os envolvidos foram reembolsados."));
             }
             catch (Exception)
