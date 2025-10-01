@@ -40,8 +40,7 @@ As APIs ficam disponíveis em:
 
 ## Executando Localmente
 
-## Clone o repositório
-
+Clone o repositório:
 ```bash
 git clone https://github.com/brenovandall/premiersoft_challenge.git
 cd premiersoft_challenge
@@ -60,5 +59,4 @@ dotnet run --project src/CheckingAccount.Api
 ---
 
 ## Licença
-
 Este projeto é distribuído sob a licença MIT.
