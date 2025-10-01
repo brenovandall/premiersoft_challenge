@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PremiersoftChallenge.Data", "src\PremiersoftChallenge.Data\PremiersoftChallenge.Data.csproj", "{942819E7-FFD3-434C-92C2-F157B42EB8B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.IntegrationTests", "tests\CheckingAccount - Api.IntegrationTests\Api.IntegrationTests\Api.IntegrationTests.csproj", "{A1D8B17F-60BA-4F10-B22C-DD238EA5D912}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{942819E7-FFD3-434C-92C2-F157B42EB8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{942819E7-FFD3-434C-92C2-F157B42EB8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{942819E7-FFD3-434C-92C2-F157B42EB8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D8B17F-60BA-4F10-B22C-DD238EA5D912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D8B17F-60BA-4F10-B22C-DD238EA5D912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D8B17F-60BA-4F10-B22C-DD238EA5D912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D8B17F-60BA-4F10-B22C-DD238EA5D912}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{9043CD5A-2090-4577-AFBB-81AE6A812044} = {AF24C8E2-4916-4234-AA3E-366121C62E6B}
 		{16397B50-7226-434E-917E-6F41C287521E} = {E7F461B1-B089-4B00-A045-6DEF4C696808}
 		{942819E7-FFD3-434C-92C2-F157B42EB8B1} = {2BED4629-96F2-4442-9941-8048450CD2B7}
+		{A1D8B17F-60BA-4F10-B22C-DD238EA5D912} = {AF24C8E2-4916-4234-AA3E-366121C62E6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF00D3E9-1CE8-4108-8080-95EC6364EDE3}

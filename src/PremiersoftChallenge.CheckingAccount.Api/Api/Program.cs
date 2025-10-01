@@ -13,7 +13,8 @@ var app = builder.Build();
 
 app.UsePresentationServices();
 
-await InitialiseSqliteDatabase.CreateTablesAsync();
+await InitialiseSqliteDatabase
+    .CreateTablesAsync(builder.Configuration.GetConnectionString("DbConnection")!);
 
 app.Run();
 

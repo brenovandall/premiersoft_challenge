@@ -30,15 +30,15 @@ namespace Infrastructure.Services
             await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
-        public async Task<IdempotentDto?> GetByKeyAndRequest(string key, string request)
+        public async Task<IdempotentDto?> GetByKey(string key)
         {
             var sql = @"
 SELECT
     chave_idempotencia Key,
     requisicao Request,
     resultado Response
-FROM idempotencia WHERE chave_idempotencia = @key AND requisicao = @request";
-            var param = new { key, request };
+FROM idempotencia WHERE chave_idempotencia = @key";
+            var param = new { key };
 
             return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<IdempotentDto?>(param);
         }

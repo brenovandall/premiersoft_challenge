@@ -32,5 +32,8 @@
 
         public static Error Conflict(string code, string description) =>
             new(code, description, ErrorType.Conflict);
+
+        public static Error Unauthorized(string description) =>
+            new("USER_UNAUTHORIZED", description, ErrorType.Unauthorized);
     }
 }

@@ -34,9 +34,9 @@ namespace Infrastructure.Repository
             await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
-        public async Task<long> Count()
+        public async Task<long> MaxAccountNumber()
         {
-            var sql = "SELECT COUNT(idcontacorrente) Result FROM contacorrente";
+            var sql = "SELECT MAX(numero) Result FROM contacorrente";
 
             return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<long>();
         }

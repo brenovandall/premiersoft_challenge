@@ -4,9 +4,9 @@ namespace Infrastructure.Extensions
 {
     public static class InitialiseSqliteDatabase
     {
-        public static async Task CreateTablesAsync()
+        public static async Task CreateTablesAsync(string connectionString)
         {
-            using var connection = new SqliteConnection(ConnectionStringBuilder.GetConnectionString());
+            using var connection = new SqliteConnection(connectionString);
             await connection.OpenAsync();
 
             var createTableSql = @"

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Infrastructure.Extensions;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
 using PremiersoftChallenge.Data;
 using PremiersoftChallenge.Data.Abstractions.Queries;
 using System.Data;
@@ -12,12 +13,18 @@ namespace Infrastructure.Data
         public string OrmProvider => OrmProviders.Dapper;
         public string Strategy => DbStrategies.Sqlite;
 
+        private readonly IConfiguration _configuration;
         private string _sql = default!;
+
+        public SqliteQueryExecutor(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public T? ExecuteFirstOrDefault<T>(object? parameters = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             var closed = connection == null;
-            connection = connection == null ? new SqliteConnection(ConnectionStringBuilder.GetConnectionString()) : connection;
+            connection = connection == null ? new SqliteConnection(_configuration.GetConnectionString("DbConnection")) : connection;
 
             if (closed)
             {
@@ -30,7 +37,7 @@ namespace Infrastructure.Data
         public async Task<T?> ExecuteFirstOrDefaultAsync<T>(object? parameters = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             var closed = connection == null;
-            connection = connection == null ? new SqliteConnection(ConnectionStringBuilder.GetConnectionString()) : connection;
+            connection = connection == null ? new SqliteConnection(_configuration.GetConnectionString("DbConnection")) : connection;
 
             var taskConn = (SqliteConnection)connection;
 
@@ -45,7 +52,7 @@ namespace Infrastructure.Data
         public IEnumerable<T> Fetch<T>(object? parameters = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             var closed = connection == null;
-            connection = connection == null ? new SqliteConnection(ConnectionStringBuilder.GetConnectionString()) : connection;
+            connection = connection == null ? new SqliteConnection(_configuration.GetConnectionString("DbConnection")) : connection;
 
             if (closed)
             {
