@@ -24,9 +24,9 @@ Para executar toda a stack via container:
 docker compose up -d
 ```
 
-As APIs ficam disponíveis em:
-- **Conta corrente:** http://localhost:6060
-- **Transferência:** http://localhost:6061
+O swagger das APIs ficam disponíveis em:
+- **Conta corrente:** http://localhost:6060/swagger
+- **Transferência:** http://localhost:6061/swagger
 
 ### Executando Localmente
 
