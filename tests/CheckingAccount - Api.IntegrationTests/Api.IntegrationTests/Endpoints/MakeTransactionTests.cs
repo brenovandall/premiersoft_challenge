@@ -58,7 +58,7 @@ namespace Api.IntegrationTests.Endpoints
 
             var response = await _client.PostAsJsonAsync("/v1/transaction/perform", request);
 
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.False(await TransactionWasComitted(id));
         }
 
