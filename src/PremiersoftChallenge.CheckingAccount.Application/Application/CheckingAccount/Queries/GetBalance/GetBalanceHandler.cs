@@ -20,9 +20,7 @@ namespace Application.CheckingAccount.Queries.GetBalance
             {
                 var result = await _service.GetAccountInfo(query.AccountId);
                 if (result == null)
-                {
                     return Result.Failure<GetBalanceResponse>(CheckingAccountErrors.InvalidBalanceInfoResult);
-                }
 
                 return Result.Success(result);
             }

@@ -34,11 +34,11 @@ namespace Infrastructure.Repository
             await GetSqlCommandFactory().SetCommand(sql).ExecuteAsync(param);
         }
 
-        public async Task<long> MaxAccountNumber()
+        public async Task<long?> MaxAccountNumber()
         {
             var sql = "SELECT MAX(numero) Result FROM contacorrente";
 
-            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<long>();
+            return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<long?>();
         }
 
         public async Task<ICheckingAccount?> GetById(Guid id)

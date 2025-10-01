@@ -4,7 +4,12 @@
     {
         public long AccountNumber { get; set; }
         public string Name { get; set; } = default!;
-        public DateTime ResponseDate { get; set; }
+        public string ResponseDate { get; set; } = default!;
         public double Balance { get; set; }
+
+        public GetBalanceResponse()
+        {
+            ResponseDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        }
     }
 }

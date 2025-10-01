@@ -23,9 +23,9 @@ SELECT
     COALESCE(SUM(CASE WHEN m.tipomovimento = 'C' THEN m.valor ELSE 0 END), 0) -
     COALESCE(SUM(CASE WHEN m.tipomovimento = 'D' THEN m.valor ELSE 0 END), 0) Balance
 FROM contacorrente a
-JOIN movimento m ON m.idcontacorrente = a.idcontacorrente
-GROUP BY a.numero, a.nome";
-            var param = new { id = checkingAccountId };
+LEFT JOIN movimento m ON m.idcontacorrente = a.idcontacorrente
+WHERE a.idcontacorrente = @id GROUP BY a.numero, a.nome";
+            var param = new { id = checkingAccountId.ToString().ToUpper() };
 
             return await GetSqlQueryFactory().SetQuery(sql).ExecuteFirstOrDefaultAsync<GetBalanceResponse?>(param);
         }

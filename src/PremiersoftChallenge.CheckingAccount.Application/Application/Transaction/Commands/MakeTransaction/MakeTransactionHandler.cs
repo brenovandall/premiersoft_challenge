@@ -30,6 +30,9 @@ namespace Application.Transaction.Commands.MakeTransaction
         {
             try
             {
+                var valid = Guid.TryParse(command.RequestId, out var parsedRequestId);
+                if (!valid) return Result.Failure<bool>(Error.Failure("INVALID_OPERATION", $"Não foi possível converter o valor {parsedRequestId} para o formato esperado."));
+
                 var account = await GetCheckingAccount(_loggedContext.Id, null);
                 var accountNumber = command.AccountNumber;
 
@@ -47,12 +50,6 @@ namespace Application.Transaction.Commands.MakeTransaction
                     {
                         account = await GetCheckingAccount(null, accountNumber);
                     }
-                }
-
-                var valid = Guid.TryParse(command.RequestId, out var parsedRequestId);
-                if (!valid)
-                {
-                    return Result.Failure<bool>(Error.Failure("INVALID_OPERATION", $"Não foi possível converter o valor {parsedRequestId} para o formato esperado."));
                 }
 
                 var transaction = Domain.Transaction.Create(parsedRequestId, account.Id, command.TransactionFlow, command.Value);

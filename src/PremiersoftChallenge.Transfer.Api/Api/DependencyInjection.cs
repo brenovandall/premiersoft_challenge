@@ -12,6 +12,9 @@ namespace Api
             services.AddEndpointsApiExplorer();
             services.AddAuthenticatedSwaggerGen();
 
+            services.AddExceptionHandler<GlobalExceptionHandler>();
+            services.AddProblemDetails();
+
             services.AddScoped<IdempotencyFilter>();
 
             return services;

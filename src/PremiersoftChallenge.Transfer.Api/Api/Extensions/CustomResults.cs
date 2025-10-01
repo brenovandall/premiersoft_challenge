@@ -35,7 +35,7 @@ namespace Api.Extensions
                     ErrorType.Problem => error.Description,
                     ErrorType.NotFound => error.Description,
                     ErrorType.Conflict => error.Description,
-                    _ => "An unexpected error occurred"
+                    _ => "Ocorreu um erro inesperado."
                 };
 
             static string GetType(ErrorType errorType) =>

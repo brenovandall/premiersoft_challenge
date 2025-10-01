@@ -23,12 +23,17 @@ namespace Application.CheckingAccount.Commands.CreateCheckingAccount
             if (!CpfValidator.IsCpfValid(command.Cpf))
                 return Result.Failure<CreateCheckingAccountResult>(CheckingAccountErrors.InvalidCpf);
 
+            var exists = await _repository.GetByAccountNumberOrName(command.Cpf);
+            if (exists != null)
+                return Result.Failure<CreateCheckingAccountResult>(
+                    Error.Problem("ACCOUNT_ALREADY_EXISTS", "Já existe uma conta cadastrada para este CPF."));
+
             var passwordHash = _passwordHasher.Hash(command.Password);
             var parts = passwordHash.Split('-');
             var password = parts[0];
             var salt = parts[1];
-            var number = await _repository.MaxAccountNumber() + 1;
-            var checkingAccount = Domain.CheckingAccount.Create(number, command.Cpf, password, salt);
+            var number = await _repository.MaxAccountNumber() ?? 0;
+            var checkingAccount = Domain.CheckingAccount.Create(number + 1, command.Cpf, password, salt);
 
             await _repository.Add(checkingAccount);
 
