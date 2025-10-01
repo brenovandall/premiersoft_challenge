@@ -5,9 +5,10 @@ using Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddPresentationServices()
-                .AddApplicationServices()
-                .AddInfrastructureServices(builder.Configuration);
+builder.Services
+    .AddPresentationServices()
+    .AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 

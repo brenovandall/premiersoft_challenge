@@ -1,7 +1,4 @@
 services:
-  cachingcontainer: 
-    image: redis
-
   chekingaccount.api:
     image: ${DOCKER_REGISTRY-}chekingaccountapi
     build:

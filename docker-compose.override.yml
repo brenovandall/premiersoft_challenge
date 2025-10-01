@@ -1,18 +1,16 @@
 services:
-  cachingcontainer:
-    container_name: cachingcontainer
-    restart: always
-    ports:
-      - "6379:6379"
-
   chekingaccount.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__DbConnection=Data Source=checkingaccountdb
+      - Jwt__Secret=fd4578204b39eb6f3ad771578e5acdd657104b659d73c389f3431a727c906ddf
+      - Jwt__Issuer=chekingaccount.api
+      - Jwt__Audience=chekingaccount.api
+      - Jwt__ExpirationInMinutes=15
     ports:
-      - "6000:8080"
-      - "6060:8081"
+      - "6060:8080"
+      - "6000:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -23,10 +21,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__DbConnection=Data Source=transferdb
+      - Jwt__Secret=fd4578204b39eb6f3ad771578e5acdd657104b659d73c389f3431a727c906ddf
+      - Jwt__Issuer=http://chekingaccount.api:8080
+      - Jwt__Audience=http://chekingaccount.api:8080
+      - ChekingAccountApi__BaseUri=http://chekingaccount.api:8080
     ports:
-      - "6001:8080"
-      - "6061:8081"
+      - "6061:8080"
+      - "6001:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

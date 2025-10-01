@@ -1,5 +1,6 @@
-﻿using PremiersoftChallenge.Security;
+﻿using Api.Infrastructure;
 using Carter;
+using PremiersoftChallenge.Security;
 
 namespace Api
 {
@@ -10,6 +11,8 @@ namespace Api
             services.AddCarter();
             services.AddEndpointsApiExplorer();
             services.AddAuthenticatedSwaggerGen();
+
+            services.AddScoped<IdempotencyFilter>();
 
             return services;
         }
